@@ -1,0 +1,12 @@
+## User Creation
+Once the connections where established, I ran the following query:
+
+```sql
+create user DLUSER identified by /*STABLISH YOUR OWN PASSWORD HERE*/;
+GRANT DWROLE TO DLUSER;
+ALTER USER DLUSER quota unlimited on data;
+GRANT EXECUTE ON DBMS_CLOUD TO DLUSER;
+GRANT DWROLE TO DLUSER;
+```
+
+These commands set up a new user **DLUSER** in the Oracle ADW I created. Giving it the necessary data warehousing privileges, unlimited storage quota, and the ability to interact with cloud object storage for data loading and unloading operations.

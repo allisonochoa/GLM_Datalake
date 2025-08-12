@@ -1,0 +1,63 @@
+## Tables
+Using my **DLUSER** schema, I proceeded to creating and loading the data for 2 external tables:
+- **channels**
+- **promotions**
+
+This inside ADW, and using Object Storage.
+
+### Creating channels table
+```sql
+BEGIN
+DBMS_CLOUD.CREATE_EXTERNAL_TABLE(
+    table_name => 'CHANNELS',
+    credential_name => 'OBJ_STORE_CRED',
+    file_uri_list => 'URL Path OF THE "channels" CSV FILE STORED INSIDE THE DataLake_ObjectStorage BUCKET',
+    format => json_object('type' value 'csv', 'skipheaders' value '1', 'ignoremissingcolumns' value 'true'),
+    column_list => 'CHANNEL_ID NUMBER,
+                    CHANNEL_DESC VARCHAR2(20 BYTE) COLLATE USING_NLS_COMP,
+                    CHANNEL_CLASS VARCHAR2(20 BYTE) COLLATE USING_NLS_COMP,
+                    CHANNEL_CLASS_ID NUMBER,
+                    CHANNEL_TOTAL VARCHAR2(13 BYTE) COLLATE USING_NLS_COMP,
+                    CHANNEL_TOTAL_ID NUMBER'
+);
+END;
+```
+
+### Corroborating channels table
+```sql
+SELECT
+    *
+FROM
+    CHANNELS;
+```
+
+### Creating promotions table
+```sql
+BEGIN
+DBMS_CLOUD.CREATE_EXTERNAL_TABLE(
+    table_name => 'PROMOTIONS',
+    credential_name => 'OBJ_STORE_CRED',
+    file_uri_list => 'URL Path OF THE "promotions" CSV FILE STORED INSIDE THE DataLake_ObjectStorage BUCKET',
+    format => json_object('type' value 'csv', 'skipheaders' value '1', 'ignoremissingcolumns' value 'true'),
+    column_list => 'PROMO_ID VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_NAME VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_SUBCATEGORY VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_SUBCATEGORY_ID VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_CATEGORY VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_CATEGORY_ID VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_COST VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_BEGIN_DATE VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_END_DATE VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_TOTAL VARCHAR2(16 BYTE) COLLATE USING_NLS_COMP,
+                PROMO_TOTAL_ID VARCHAR2(30 BYTE) COLLATE USING_NLS_COMP'
+);
+END;
+```
+
+### Corroborating promotions table
+```sql
+SELECT
+    *
+FROM
+    PROMOTIONS;
+```
